@@ -993,9 +993,11 @@ button {
 
   .category-tabs {
     flex-wrap: wrap;
+    gap: 8px;
   }
 
   .category-tab {
-    flex-shrink: 0;
+    padding: 6px 14px;
+    font-size: 0.82rem;
   }
 }
