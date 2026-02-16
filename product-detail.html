@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품 상세 - TrendDev Shop</title>
+  <meta name="description" content="TrendDev Shop 상품 상세 정보를 확인하고 쿠팡에서 구매하세요.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Trend<span>Dev</span> Shop</a>
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html">홈</a></li>
+          <li><a href="products.html">전체 상품</a></li>
+          <li><a href="products.html?category=electronics">전자기기</a></li>
+          <li><a href="products.html?category=fashion">패션</a></li>
+          <li><a href="products.html?category=living">생활용품</a></li>
+          <li><a href="products.html?category=health">건강/식품</a></li>
+        </ul>
+        <form class="search-form" action="products.html" method="get">
+          <input type="text" name="search" class="search-input" placeholder="상품 검색...">
+          <button type="submit" class="search-btn">🔍</button>
+        </form>
+        <button class="mobile-menu-btn" aria-label="메뉴 열기">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <div class="container">
+      <a href="index.html">홈</a>
+      <span>›</span>
+      <a href="products.html">전체 상품</a>
+      <span>›</span>
+      <a href="#" id="breadcrumbCategory">카테고리</a>
+      <span>›</span>
+      <strong id="breadcrumbProduct">상품명</strong>
+    </div>
+  </div>
+
+  <!-- Product Detail -->
+  <section class="product-detail">
+    <div class="container">
+      <div class="product-detail-grid" id="productDetail">
+        <!-- JS로 렌더링 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Products -->
+  <section class="related-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">관련 상품 추천</h2>
+        <a href="products.html" class="section-link">더 보기 →</a>
+      </div>
+      <div class="product-grid" id="relatedProducts"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">Trend<span>Dev</span> Shop</div>
+          <p>TrendDev Shop은 트렌디한 상품들을 엄선하여 소개하는 쇼핑 큐레이션 사이트입니다.</p>
+        </div>
+        <div class="footer-col">
+          <h4>카테고리</h4>
+          <ul>
+            <li><a href="products.html?category=electronics">전자기기</a></li>
+            <li><a href="products.html?category=fashion">패션</a></li>
+            <li><a href="products.html?category=living">생활용품</a></li>
+            <li><a href="products.html?category=health">건강/식품</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>바로가기</h4>
+          <ul>
+            <li><a href="index.html">홈</a></li>
+            <li><a href="products.html">전체 상품</a></li>
+            <li><a href="products.html?sort=discount">할인 상품</a></li>
+            <li><a href="products.html?sort=review">인기 상품</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>고객 지원</h4>
+          <ul>
+            <li><a href="#">자주 묻는 질문</a></li>
+            <li><a href="#">이용 안내</a></li>
+            <li><a href="#">제휴 문의</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TrendDev Shop. All rights reserved.</p>
+        <p class="footer-disclaimer">이 사이트의 상품 링크를 통해 구매 시, 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var productId = getUrlParam("id");
+      var product = getProductById(productId);
+
+      if (!product) {
+        document.getElementById("productDetail").innerHTML =
+          '<div class="no-results"><h3>상품을 찾을 수 없습니다</h3><p><a href="products.html" class="btn btn-primary">상품 목록으로 돌아가기</a></p></div>';
+        return;
+      }
+
+      // 페이지 타이틀 업데이트
+      document.title = product.name + " - TrendDev Shop";
+
+      // 브레드크럼 업데이트
+      var catInfo = categories[product.category];
+      var breadcrumbCat = document.getElementById("breadcrumbCategory");
+      breadcrumbCat.textContent = catInfo.name;
+      breadcrumbCat.href = "products.html?category=" + product.category;
+      document.getElementById("breadcrumbProduct").textContent = product.name;
+
+      // 할인율
+      var discount = getDiscountRate(product.price, product.originalPrice);
+
+      // 상세 페이지 렌더링
+      document.getElementById("productDetail").innerHTML =
+        '<div class="detail-gallery">' +
+          '<div class="detail-main-image">' +
+            '<img src="' + product.image + '" alt="' + product.name + '">' +
+          '</div>' +
+        '</div>' +
+        '<div class="detail-info">' +
+          '<div class="detail-category">' + catInfo.icon + ' ' + catInfo.name + '</div>' +
+          '<h1 class="detail-name">' + product.name + '</h1>' +
+          '<div class="detail-rating">' +
+            renderStars(product.rating) +
+            '<span class="rating-text">' + product.rating + ' / 5.0 (' + product.reviewCount.toLocaleString() + '개 리뷰)</span>' +
+          '</div>' +
+          '<div class="detail-price-box">' +
+            (discount > 0 ? '<span class="detail-original-price">' + formatPrice(product.originalPrice) + '</span>' : '') +
+            '<span class="detail-discount">' + discount + '%</span>' +
+            '<span class="detail-current-price">' + formatPrice(product.price) + '</span>' +
+          '</div>' +
+          '<div class="detail-tags">' +
+            product.tags.map(function (tag) { return '<span class="detail-tag">' + tag + '</span>'; }).join('') +
+          '</div>' +
+          '<p class="detail-description">' + product.description + '</p>' +
+          '<div class="detail-actions">' +
+            '<a href="' + product.coupangUrl + '" target="_blank" rel="noopener noreferrer" class="btn-coupang-large">' +
+              '🛒 쿠팡에서 구매하기' +
+            '</a>' +
+            '<a href="products.html" class="btn-back">← 목록으로 돌아가기</a>' +
+          '</div>' +
+        '</div>';
+
+      // 관련 상품 (같은 카테고리, 자신 제외, 최대 4개)
+      var related = products
+        .filter(function (p) { return p.category === product.category && p.id !== product.id; })
+        .slice(0, 4);
+
+      // 같은 카테고리가 부족하면 다른 카테고리에서 채움
+      if (related.length < 4) {
+        var others = products
+          .filter(function (p) { return p.id !== product.id && p.category !== product.category; })
+          .slice(0, 4 - related.length);
+        related = related.concat(others);
+      }
+
+      renderProducts(related, "relatedProducts");
+    });
+  </script>
+
+</body>
+</html>

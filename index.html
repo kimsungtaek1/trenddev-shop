@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrendDev Shop - 트렌디한 상품을 만나보세요</title>
+  <meta name="description" content="TrendDev Shop에서 엄선된 트렌디한 상품들을 만나보세요. 전자기기, 패션, 생활용품, 건강식품까지.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Trend<span>Dev</span> Shop</a>
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">홈</a></li>
+          <li><a href="products.html">전체 상품</a></li>
+          <li><a href="products.html?category=electronics">전자기기</a></li>
+          <li><a href="products.html?category=fashion">패션</a></li>
+          <li><a href="products.html?category=living">생활용품</a></li>
+          <li><a href="products.html?category=health">건강/식품</a></li>
+        </ul>
+        <form class="search-form" action="products.html" method="get">
+          <input type="text" name="search" class="search-input" placeholder="상품 검색...">
+          <button type="submit" class="search-btn">🔍</button>
+        </form>
+        <button class="mobile-menu-btn" aria-label="메뉴 열기">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>트렌디한 상품,<br><span class="highlight">특별한 가격</span>으로 만나세요</h1>
+      <p>TrendDev Shop이 엄선한 인기 상품들을 최저가로 만나보세요.<br>클릭 한 번으로 쿠팡에서 바로 구매!</p>
+      <div class="hero-buttons">
+        <a href="products.html" class="btn btn-primary">상품 둘러보기 →</a>
+        <a href="#popular" class="btn btn-outline">인기 상품 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">카테고리별 쇼핑</h2>
+      </div>
+      <div class="category-tabs" id="homeCategories">
+        <button class="category-tab active" data-category="all">🛒 전체</button>
+        <button class="category-tab" data-category="electronics">📱 전자기기</button>
+        <button class="category-tab" data-category="fashion">👕 패션</button>
+        <button class="category-tab" data-category="living">🏠 생활용품</button>
+        <button class="category-tab" data-category="health">💊 건강/식품</button>
+      </div>
+      <div class="product-grid" id="categoryProducts"></div>
+    </div>
+  </section>
+
+  <!-- Popular Products -->
+  <section class="section" id="popular" style="background: var(--white);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">인기 상품 TOP 4</h2>
+        <a href="products.html?sort=review" class="section-link">전체 보기 →</a>
+      </div>
+      <div class="product-grid" id="popularProducts"></div>
+    </div>
+  </section>
+
+  <!-- Best Deals -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">최대 할인 상품</h2>
+        <a href="products.html?sort=discount" class="section-link">전체 보기 →</a>
+      </div>
+      <div class="product-grid" id="discountProducts"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">Trend<span>Dev</span> Shop</div>
+          <p>TrendDev Shop은 트렌디한 상품들을 엄선하여 소개하는 쇼핑 큐레이션 사이트입니다. 모든 구매는 쿠팡을 통해 안전하게 이루어집니다.</p>
+        </div>
+        <div class="footer-col">
+          <h4>카테고리</h4>
+          <ul>
+            <li><a href="products.html?category=electronics">전자기기</a></li>
+            <li><a href="products.html?category=fashion">패션</a></li>
+            <li><a href="products.html?category=living">생활용품</a></li>
+            <li><a href="products.html?category=health">건강/식품</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>바로가기</h4>
+          <ul>
+            <li><a href="index.html">홈</a></li>
+            <li><a href="products.html">전체 상품</a></li>
+            <li><a href="products.html?sort=discount">할인 상품</a></li>
+            <li><a href="products.html?sort=review">인기 상품</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>고객 지원</h4>
+          <ul>
+            <li><a href="#">자주 묻는 질문</a></li>
+            <li><a href="#">이용 안내</a></li>
+            <li><a href="#">제휴 문의</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TrendDev Shop. All rights reserved.</p>
+        <p class="footer-disclaimer">이 사이트의 상품 링크를 통해 구매 시, 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // 카테고리별 상품
+      renderProducts(products, "categoryProducts");
+
+      // 인기 상품 (리뷰 많은 순 TOP 4)
+      const popular = sortProducts(products, "review").slice(0, 4);
+      renderProducts(popular, "popularProducts");
+
+      // 할인 상품 TOP 4
+      const discounted = sortProducts(products, "discount").slice(0, 4);
+      renderProducts(discounted, "discountProducts");
+
+      // 카테고리 탭 클릭
+      document.getElementById("homeCategories").addEventListener("click", function (e) {
+        const tab = e.target.closest(".category-tab");
+        if (!tab) return;
+        this.querySelectorAll(".category-tab").forEach(function (t) { t.classList.remove("active"); });
+        tab.classList.add("active");
+        const cat = tab.dataset.category;
+        const filtered = getProductsByCategory(cat);
+        renderProducts(filtered, "categoryProducts");
+      });
+    });
+  </script>
+
+</body>
+</html>

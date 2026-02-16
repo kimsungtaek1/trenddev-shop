@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전체 상품 - TrendDev Shop</title>
+  <meta name="description" content="TrendDev Shop의 전체 상품을 둘러보세요. 카테고리별 필터와 정렬 기능으로 원하는 상품을 쉽게 찾아보세요.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Trend<span>Dev</span> Shop</a>
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html">홈</a></li>
+          <li><a href="products.html" class="active">전체 상품</a></li>
+          <li><a href="products.html?category=electronics">전자기기</a></li>
+          <li><a href="products.html?category=fashion">패션</a></li>
+          <li><a href="products.html?category=living">생활용품</a></li>
+          <li><a href="products.html?category=health">건강/식품</a></li>
+        </ul>
+        <form class="search-form" action="products.html" method="get">
+          <input type="text" name="search" class="search-input" placeholder="상품 검색...">
+          <button type="submit" class="search-btn">🔍</button>
+        </form>
+        <button class="mobile-menu-btn" aria-label="메뉴 열기">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Title -->
+  <section class="page-title-bar">
+    <div class="container">
+      <h1 id="pageTitle">전체 상품</h1>
+      <p id="pageSubtitle">TrendDev Shop이 엄선한 상품들을 만나보세요</p>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="section">
+    <div class="container">
+      <!-- Category Tabs -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="category-tab active" data-category="all">🛒 전체</button>
+        <button class="category-tab" data-category="electronics">📱 전자기기</button>
+        <button class="category-tab" data-category="fashion">👕 패션</button>
+        <button class="category-tab" data-category="living">🏠 생활용품</button>
+        <button class="category-tab" data-category="health">💊 건강/식품</button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="products-toolbar">
+        <span class="product-count" id="productCount"></span>
+        <select class="sort-select" id="sortSelect">
+          <option value="default">기본 정렬</option>
+          <option value="price-low">낮은 가격순</option>
+          <option value="price-high">높은 가격순</option>
+          <option value="rating">평점순</option>
+          <option value="review">리뷰 많은순</option>
+          <option value="discount">할인율순</option>
+        </select>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid"></div>
+      <div class="no-results" id="noResults" style="display:none;">
+        <h3>검색 결과가 없습니다</h3>
+        <p>다른 검색어를 입력해보세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">Trend<span>Dev</span> Shop</div>
+          <p>TrendDev Shop은 트렌디한 상품들을 엄선하여 소개하는 쇼핑 큐레이션 사이트입니다.</p>
+        </div>
+        <div class="footer-col">
+          <h4>카테고리</h4>
+          <ul>
+            <li><a href="products.html?category=electronics">전자기기</a></li>
+            <li><a href="products.html?category=fashion">패션</a></li>
+            <li><a href="products.html?category=living">생활용품</a></li>
+            <li><a href="products.html?category=health">건강/식품</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>바로가기</h4>
+          <ul>
+            <li><a href="index.html">홈</a></li>
+            <li><a href="products.html">전체 상품</a></li>
+            <li><a href="products.html?sort=discount">할인 상품</a></li>
+            <li><a href="products.html?sort=review">인기 상품</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>고객 지원</h4>
+          <ul>
+            <li><a href="#">자주 묻는 질문</a></li>
+            <li><a href="#">이용 안내</a></li>
+            <li><a href="#">제휴 문의</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TrendDev Shop. All rights reserved.</p>
+        <p class="footer-disclaimer">이 사이트의 상품 링크를 통해 구매 시, 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      let currentCategory = params.get("category") || "all";
+      let currentSort = params.get("sort") || "default";
+      let searchQuery = params.get("search") || "";
+
+      // 초기 상태 설정
+      var sortSelect = document.getElementById("sortSelect");
+      sortSelect.value = currentSort;
+
+      // 검색어 있을 경우
+      var searchInput = document.querySelector(".search-input");
+      if (searchQuery && searchInput) {
+        searchInput.value = searchQuery;
+        document.getElementById("pageTitle").textContent = '"' + searchQuery + '" 검색 결과';
+      }
+
+      // 카테고리 탭 활성화
+      if (currentCategory !== "all") {
+        document.querySelectorAll(".category-tab").forEach(function (tab) {
+          tab.classList.remove("active");
+          if (tab.dataset.category === currentCategory) {
+            tab.classList.add("active");
+          }
+        });
+        var catName = categories[currentCategory];
+        if (catName) {
+          document.getElementById("pageTitle").textContent = catName.name;
+        }
+      }
+
+      function updateProducts() {
+        var filtered;
+        if (searchQuery) {
+          filtered = searchProducts(searchQuery);
+          if (currentCategory !== "all") {
+            filtered = filtered.filter(function (p) { return p.category === currentCategory; });
+          }
+        } else {
+          filtered = getProductsByCategory(currentCategory);
+        }
+
+        var sorted = sortProducts(filtered, currentSort);
+
+        document.getElementById("productCount").textContent = "총 " + sorted.length + "개 상품";
+
+        if (sorted.length === 0) {
+          document.getElementById("productGrid").innerHTML = "";
+          document.getElementById("noResults").style.display = "block";
+        } else {
+          document.getElementById("noResults").style.display = "none";
+          renderProducts(sorted, "productGrid");
+        }
+      }
+
+      // 카테고리 탭 클릭
+      document.getElementById("categoryTabs").addEventListener("click", function (e) {
+        var tab = e.target.closest(".category-tab");
+        if (!tab) return;
+        this.querySelectorAll(".category-tab").forEach(function (t) { t.classList.remove("active"); });
+        tab.classList.add("active");
+        currentCategory = tab.dataset.category;
+        updateProducts();
+      });
+
+      // 정렬 변경
+      sortSelect.addEventListener("change", function () {
+        currentSort = this.value;
+        updateProducts();
+      });
+
+      updateProducts();
+    });
+  </script>
+
+</body>
+</html>
