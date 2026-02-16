@@ -992,14 +992,10 @@ button {
   }
 
   .category-tabs {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
+    flex-wrap: wrap;
   }
 
   .category-tab {
-    white-space: nowrap;
     flex-shrink: 0;
   }
 }
